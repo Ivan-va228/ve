@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}FineWhisky | Home{% endblock%}
+{% block content %}
+
+
+<main>
+    <h1>Створити акаунт</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="username">Ім’я користувача</label>
+      <input type="text" name="username" id="username" required>
+  
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required>
+  
+      <label for="password">Пароль</label>
+      <input type="password" name="password" id="password" required>
+  
+      <button type="submit">Зареєструватись</button>
+    </form>
+  </main>
+  {% endblock %}

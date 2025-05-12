@@ -1,13 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from django.conf import settings
+from django.db.models import Q
 
 def home(request):
     return render(request, 'home.html', {'MEDIA_URL': settings.MEDIA_URL})
 
 def catalog_view(request):
     products = Product.objects.all()
-    return render(request, 'catalog.html', {'products': products})
+    query = request.GET.get('q')
+
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+
+    context = {'products': products, 'query': query}
+    return render(request, 'catalog.html', context)
+
+def product_list(request):
+    products = Product.objects.all()
+    query = request.GET.get('q')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    context = {'products': products}
+    return render(request, 'your_template.html', context)
 
 def cart_view(request):
     cart = request.session.get('cart', {})
